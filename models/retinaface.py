@@ -20,7 +20,7 @@ class ClassHead(nn.Module):
     def forward(self,x):
         out = self.conv1x1(x)
         out = out.permute(0,2,3,1).contiguous()
-        
+
         return out.view(out.shape[0], -1, 2)
 
 class BboxHead(nn.Module):
@@ -57,7 +57,7 @@ class RetinaFace(nn.Module):
         if cfg['name'] == 'mobilenet0.25':
             backbone = MobileNetV1()
             if cfg['pretrain']:
-                checkpoint = torch.load("./weights/mobilenetV1X0.25_pretrain.tar", map_location=torch.device('cpu'))
+                checkpoint = torch.load("./pretrained_model/mobilenetV1X0.25_pretrain.tar", map_location=torch.device('cpu'))
                 from collections import OrderedDict
                 new_state_dict = OrderedDict()
                 for k, v in checkpoint['state_dict'].items():
@@ -91,7 +91,7 @@ class RetinaFace(nn.Module):
         for i in range(fpn_num):
             classhead.append(ClassHead(inchannels,anchor_num))
         return classhead
-    
+
     def _make_bbox_head(self,fpn_num=3,inchannels=64,anchor_num=2):
         bboxhead = nn.ModuleList()
         for i in range(fpn_num):

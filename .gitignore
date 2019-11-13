@@ -1,0 +1,10 @@
+.idea/
+runs/
+data
+data
+*__pycache__*
+*.tar
+mtcnn
+pretrained_model
+results
+widerface_evaluate
